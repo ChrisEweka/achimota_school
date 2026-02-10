@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Westwood Academy — 100 Years</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --charcoal: #141414;
+            --offwhite: #faf9f6;
+            --cream: #f5f2eb;
+            --accent: #ff6b4a;
+            --accent-light: #ff8f7a;
+            --gray: #888;
+            --light-gray: #e5e5e5;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--offwhite);
+            color: var(--black);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Grain overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+
+        .logo-text {
+            font-family: 'Archivo', sans-serif;
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: var(--offwhite);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--offwhite);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 5vw;
+            position: relative;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            grid-template-rows: repeat(20, 1fr);
+            opacity: 0.15;
+        }
+
+        .hero-bg span {
+            border: 1px solid var(--accent);
+            transition: all 2s ease;
+        }
+
+        .hero-bg span.active {
+            background: var(--accent);
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1600px;
+            width: 100%;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 4rem;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero-title {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(3rem, 12vw, 10rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+            color: var(--offwhite);
+            margin-bottom: 2rem;
+        }
+
+        .hero-title span {
+            display: block;
+            -webkit-text-stroke: 2px var(--offwhite);
+            color: transparent;
+        }
+
+        .hero-year {
+            position: absolute;
+            right: 5vw;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(8rem, 25vw, 20rem);
+            font-weight: 900;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--accent);
+            opacity: 0.3;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .hero-desc {
+            max-width: 500px;
+            color: var(--gray);
+            font-size: 1.125rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--gray);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* Marquee */
+        .marquee {
+            background: var(--accent);
+            padding: 1.5rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: flex;
+            animation: marquee 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-text {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--black);
+            padding: 0 3rem;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Sections */
+        section {
+            padding: 8rem 5vw;
+        }
+
+        .section-header {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-tag {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+        }
+
+        .section-title {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        /* Logo System */
+        .logo-showcase {
+            background: var(--charcoal);
+        }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-card {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-card:nth-child(1) { background: var(--offwhite); }
+        .logo-card:nth-child(2) { background: var(--charcoal); }
+        .logo-card:nth-child(3) { background: var(--accent); }
+        .logo-card:nth-child(4) { background: var(--black); }
+        .logo-card:nth-child(5) { background: var(--cream); }
+        .logo-card:nth-child(6) { 
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+        }
+
+        .logo-svg {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .logo-card:hover .logo-svg {
+            transform: scale(1.08) rotate(-3deg);
+        }
+
+        .logo-label {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .logo-card:nth-child(1) .logo-label,
+        .logo-card:nth-child(5) .logo-label { color: var(--black); }
+        .logo-card:nth-child(2) .logo-label,
+        .logo-card:nth-child(4) .logo-label { color: var(--offwhite); }
+        .logo-card:nth-child(3) .logo-label,
+        .logo-card:nth-child(6) .logo-label { color: var(--black); }
+
+        /* Mockups */
+        .mockups {
+            background: var(--offwhite);
+        }
+
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .mockup-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--cream);
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mockup-card.large {
+            grid-column: span 2;
+            min-height: 600px;
+        }
+
+        .mockup-visual {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 3rem;
+        }
+
+        .mockup-info {
+            padding: 2rem;
+            background: var(--offwhite);
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .mockup-title {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .mockup-desc {
+            color: var(--gray);
+            font-size: 0.9375rem;
+        }
+
+        /* Mockup Elements */
+        .id-card {
+            width: 280px;
+            height: 380px;
+            background: var(--offwhite);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .id-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: var(--accent);
+        }
+
+        .id-photo {
+            width: 80px;
+            height: 80px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            margin-top: 60px;
+            margin-bottom: 1.5rem;
+            border: 4px solid var(--offwhite);
+        }
+
+        .id-line {
+            height: 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+            width: 70%;
+        }
+
+        .id-line.short {
+            width: 40%;
+        }
+
+        .id-logo {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+        }
+
+        .poster-wall {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+        }
+
+        .poster {
+            aspect-ratio: 2/3;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster:nth-child(1) { background: var(--accent); }
+        .poster:nth-child(2) { background: var(--black); }
+        .poster:nth-child(3) { background: var(--charcoal); }
+
+        .poster-content {
+            position: absolute;
+            inset: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .poster-num {
+            font-family: 'Archivo', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            opacity: 0.2;
+        }
+
+        .poster:nth-child(1) .poster-num { color: var(--black); }
+        .poster:nth-child(2) .poster-num,
+        .poster:nth-child(3) .poster-num { color: var(--offwhite); }
+
+        .poster-logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        .merch-stack {
+            display: flex;
+            gap: -20px;
+            align-items: flex-end;
+        }
+
+        .merch-item {
+            width: 160px;
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .merch-item:nth-child(1) {
+            background: var(--offwhite);
+            transform: rotate(-8deg) translateX(20px);
+            z-index: 1;
+        }
+
+        .merch-item:nth-child(2) {
+            background: var(--accent);
+            width: 180px;
+            height: 240px;
+            z-index: 2;
+        }
+
+        .merch-item:nth-child(3) {
+            background: var(--charcoal);
+            transform: rotate(8deg) translateX(-20px);
+            z-index: 1;
+        }
+
+        .merch-logo {
+            width: 60px;
+            height: 60px;
+        }
+
+        .digital-screen {
+            width: 320px;
+            height: 600px;
+            background: var(--black);
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+        }
+
+        .digital-inner {
+            width: 100%;
+            height: 100%;
+            background: var(--offwhite);
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .digital-notch {
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 8px;
+        }
+
+        .digital-bar {
+            width: 120px;
+            height: 6px;
+            background: var(--black);
+            border-radius: 3px;
+        }
+
+        .digital-content {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        .digital-header {
+            height: 80px;
+            background: var(--accent);
+            margin: -1.5rem -1.5rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .digital-logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        .digital-block {
+            height: 12px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        /* Colors */
+        .colors {
+            background: var(--charcoal);
+        }
+
+        .colors .section-title {
+            color: var(--offwhite);
+        }
+
+        .color-display {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .color-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .color-swatch {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .color-swatch::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid currentColor;
+            opacity: 0.3;
+        }
+
+        .color-swatch.black { background: var(--black); color: var(--offwhite); }
+        .color-swatch.charcoal { background: var(--charcoal); color: var(--offwhite); }
+        .color-swatch.offwhite { background: var(--offwhite); color: var(--black); }
+        .color-swatch.accent { background: var(--accent); color: var(--black); }
+
+        .color-name {
+            font-family: 'Archivo', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .color-hex {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            opacity: 0.6;
+        }
+
+        /* Typography Section */
+        .typography {
+            background: var(--cream);
+        }
+
+        .type-showcase {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            gap: 4rem;
+        }
+
+        .type-card {
+            background: var(--offwhite);
+            padding: 4rem;
+            border-radius: 16px;
+        }
+
+        .type-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .type-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+        }
+
+        .type-weights {
+            display: flex;
+            gap: 2rem;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .type-sample {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 2rem;
+        }
+
+        .type-body {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--gray);
+            max-width: 700px;
+        }
+
+        .type-card.secondary .type-sample {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            padding: 6rem 5vw;
+            text-align: center;
+        }
+
+        .footer-mark {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-text {
+            font-family: 'Archivo', sans-serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            color: var(--offwhite);
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-sub {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .footer-year {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            font-family: 'Archivo', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            z-index: 100;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .logo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .mockup-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mockup-card.large {
+                grid-column: span 1;
+            }
+            
+            .color-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 0 1.5rem;
+            }
+            
+            .hero-year {
+                display: none;
+            }
+            
+            section {
+                padding: 5rem 1.5rem;
+            }
+            
+            .section-header {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .logo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .type-card {
+                padding: 2rem;
+            }
+            
+            .color-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo-text">WESTWOOD</div>
+        <ul class="nav-links">
+            <li><a href="#identity">Identity</a></li>
+            <li><a href="#mockups">Mockups</a></li>
+            <li><a href="#colors">Colors</a></li>
+            <li><a href="#type">Type</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-bg" id="gridBg"></div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">Est. 1924 — 2024</div>
+            <h1 class="hero-title">Westwood<br><span>Academy</span></h1>
+            <p class="hero-desc">A century of shaping minds, building futures, and creating leaders. Our centennial identity honors the past while charging toward the next hundred years.</p>
+        </div>
+        <div class="hero-year">100</div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Explore</span>
+        </div>
+    </header>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span class="marquee-text">100 Years of Excellence ★ Centenary Celebration ★ Legacy & Future ★ Alumni Reunion 2024 ★</span>
+            <span class="marquee-text">100 Years of Excellence ★ Centenary Celebration ★ Legacy & Future ★ Alumni Reunion 2024 ★</span>
+        </div>
+    </div>
+
+    <section id="identity" class="logo-showcase">
+        <div class="section-header">
+            <span class="section-tag">The Identity</span>
+            <h2 class="section-title">A flexible system built for every context</h2>
+        </div>
+        <div class="logo-grid">
+            <div class="logo-card">
+                <svg class="logo-svg" viewBox="0 0 100 100">
+                    <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#0a0a0a" stroke-width="8"/>
+                    <circle cx="50" cy="50" r="15" fill="#ff6b4a"/>
+                    <text x="50" y="55" text-anchor="middle" fill="#0a0a0a" font-size="8" font-family="Archivo" font-weight="900">100</text>
+                </svg>
+                <span class="logo-label">Primary</span>
+            </div>
+            <div class="logo-card">
+                <svg class="logo-svg" viewBox="0 0 100 100">
+                    <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#faf9f6" stroke-width="8"/>
+                    <circle cx="50" cy="50" r="15" fill="#ff6b4a"/>
+                    <text x="50" y="55" text-anchor="middle" fill="#faf9f6" font-size="8" font-family="Archivo" font-weight="900">100</text>
+                </svg>
+                <span class="logo-label">Reversed</span>
+            </div>
+            <div class="logo-card">
+                <svg class="logo-svg" viewBox="0 0 100 100">
+                    <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#0a0a0a" stroke-width="8"/>
+                    <circle cx="50" cy="50" r="15" fill="#0a0a0a"/>
+                    <text x="50" y="55" text-anchor="middle" fill="#ff6b4a" font-size="8" font-family="Archivo" font-weight="900">100</text>
+                </svg>
+                <span class="logo-label">Mono</span>
+            </div>
+            <div class="logo-card">
+                <svg class="logo-svg" viewBox="0 0 100 100">
+                    <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#ff6b4a" stroke-width="8"/>
+                    <circle cx="50" cy="50" r="15" fill="#ff6b4a"/>
+                    <text x="50" y="55" text-anchor="middle" fill="#0a0a0a" font-size="8" font-family="Archivo" font-weight="900">100</text>
+                </svg>
+                <span class="logo-label">Outline</span>
+            </div>
+            <div class="logo-card">
+                <svg class="logo-svg" viewBox="0 0 100 140">
+                    <path d="M30,20 L70,20 L70,60 L30,60 Z" fill="none" stroke="#0a0a0a" stroke-width="6"/>
+                    <circle cx="50" cy="40" r="10" fill="#ff6b4a"/>
+                    <text x="50" y="44" text-anchor="middle" fill="#0a0a0a" font-size="6" font-family="Archivo" font-weight="900">100</text>
+                    <text x="50" y="85" text-anchor="middle" fill="#0a0a0a" font-size="12" font-family="Archivo" font-weight="900" letter-spacing="-0.02em">WESTWOOD</text>
+                    <text x="50" y="105" text-anchor="middle" fill="#888" font-size="8" font-family="Space Grotesk" font-weight="500">1924 — 2024</text>
+                </svg>
+                <span class="logo-label">Stacked</span>
+            </div>
+            <div class="logo-card">
+                <svg class="logo-svg" viewBox="0 0 100 100">
+                    <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#0a0a0a" stroke-width="6"/>
+                    <path d="M10,10 L30,10 L30,30 L10,30 Z" fill="#0a0a0a"/>
+                    <path d="M70,10 L90,10 L90,30 L70,30 Z" fill="#0a0a0a"/>
+                    <path d="M10,70 L30,70 L30,90 L10,90 Z" fill="#0a0a0a"/>
+                    <path d="M70,70 L90,70 L90,90 L70,90 Z" fill="#0a0a0a"/>
+                    <circle cx="50" cy="50" r="12" fill="#0a0a0a"/>
+                    <text x="50" y="54" text-anchor="middle" fill="#ff6b4a" font-size="7" font-family="Archivo" font-weight="900">100</text>
+                </svg>
+                <span class="logo-label">Pattern</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="mockups" class="mockups">
+        <div class="section-header">
+            <span class="section-tag">Applications</span>
+            <h2 class="section-title">From campus to the world</h2>
+        </div>
+        <div class="mockup-grid">
+            <div class="mockup-card large">
+                <div class="mockup-visual">
+                    <div class="poster-wall">
+                        <div class="poster">
+                            <div class="poster-content">
+                                <span class="poster-num">01</span>
+                                <svg class="poster-logo" viewBox="0 0 100 100">
+                                    <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#0a0a0a" stroke-width="8"/>
+                                    <circle cx="50" cy="50" r="15" fill="#0a0a0a"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="poster">
+                            <div class="poster-content">
+                                <span class="poster-num">02</span>
+                                <svg class="poster-logo" viewBox="0 0 100 100">
+                                    <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#ff6b4a" stroke-width="8"/>
+                                    <circle cx="50" cy="50" r="15" fill="#ff6b4a"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="poster">
+                            <div class="poster-content">
+                                <span class="poster-num">03</span>
+                                <svg class="poster-logo" viewBox="0 0 100 100">
+                                    <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#faf9f6" stroke-width="8"/>
+                                    <circle cx="50" cy="50" r="15" fill="#faf9f6"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockup-info">
+                    <h3 class="mockup-title">Campaign Posters</h3>
+                    <p class="mockup-desc">Modular poster system for the centennial campaign across campus and city.</p>
+                </div>
+            </div>
+            <div class="mockup-card">
+                <div class="mockup-visual">
+                    <div class="id-card">
+                        <svg class="id-logo" viewBox="0 0 100 100">
+                            <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#faf9f6" stroke-width="8"/>
+                            <circle cx="50" cy="50" r="15" fill="#faf9f6"/>
+                            <text x="50" y="55" text-anchor="middle" fill="#ff6b4a" font-size="8" font-family="Archivo" font-weight="900">100</text>
+                        </svg>
+                        <div class="id-photo"></div>
+                        <div class="id-line"></div>
+                        <div class="id-line short"></div>
+                        <div class="id-line" style="width: 50%"></div>
+                    </div>
+                </div>
+                <div class="mockup-info">
+                    <h3 class="mockup-title">ID & Access Cards</h3>
+                    <p class="mockup-desc">Staff and student credentials with the centennial mark.</p>
+                </div>
+            </div>
+            <div class="mockup-card">
+                <div class="mockup-visual">
+                    <div class="merch-stack">
+                        <div class="merch-item">
+                            <svg class="merch-logo" viewBox="0 0 100 100">
+                                <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#0a0a0a" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="15" fill="#ff6b4a"/>
+                            </svg>
+                        </div>
+                        <div class="merch-item">
+                            <svg class="merch-logo" viewBox="0 0 100 100">
+                                <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#0a0a0a" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="15" fill="#0a0a0a"/>
+                            </svg>
+                        </div>
+                        <div class="merch-item">
+                            <svg class="merch-logo" viewBox="0 0 100 100">
+                                <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#faf9f6" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="15" fill="#faf9f6"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockup-info">
+                    <h3 class="mockup-title">Merchandise</h3>
+                    <p class="mockup-desc">Limited edition apparel and accessories for the centennial year.</p>
+                </div>
+            </div>
+            <div class="mockup-card large">
+                <div class="mockup-visual">
+                    <div class="digital-screen">
+                        <div class="digital-inner">
+                            <div class="digital-notch">
+                                <div class="digital-bar"></div>
+                            </div>
+                            <div class="digital-content">
+                                <div class="digital-header">
+                                    <svg class="digital-logo" viewBox="0 0 100 100">
+                                        <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#0a0a0a" stroke-width="8"/>
+                                        <circle cx="50" cy="50" r="15" fill="#0a0a0a"/>
+                                    </svg>
+                                </div>
+                                <div class="digital-block"></div>
+                                <div class="digital-block short"></div>
+                                <div class="digital-block" style="width: 80%"></div>
+                                <div class="digital-block"></div>
+                                <div class="digital-block short"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mockup-info">
+                    <h3 class="mockup-title">Digital Experience</h3>
+                    <p class="mockup-desc">App interface, website, and all digital touchpoints unified under the centennial identity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="colors" class="colors">
+        <div class="section-header">
+            <span class="section-tag">Color System</span>
+            <h2 class="section-title">Bold contrast for maximum impact</h2>
+        </div>
+        <div class="color-display">
+            <div class="color-row">
+                <div class="color-swatch black">
+                    <span class="color-name">Carbon</span>
+                    <span class="color-hex">#0A0A0A</span>
+                </div>
+                <div class="color-swatch charcoal">
+                    <span class="color-name">Charcoal</span>
+                    <span class="color-hex">#141414</span>
+                </div>
+                <div class="color-swatch offwhite">
+                    <span class="color-name">Canvas</span>
+                    <span class="color-hex">#FAF9F6</span>
+                </div>
+                <div class="color-swatch accent">
+                    <span class="color-name">Vermillion</span>
+                    <span class="color-hex">#FF6B4A</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="type" class="typography">
+        <div class="section-header">
+            <span class="section-tag">Typography</span>
+            <h2 class="section-title">Archivo × Space Grotesk</h2>
+        </div>
+        <div class="type-showcase">
+            <div class="type-card">
+                <div class="type-header">
+                    <span class="type-name">Archivo — Display</span>
+                    <div class="type-weights">900 800 700 600 500 400</div>
+                </div>
+                <div class="type-sample">Unapologetically Bold</div>
+                <p class="type-body">Archivo delivers commanding presence for headlines and key moments. Its aggressive letterforms and tight spacing create urgency and authority—perfect for declaring a century of excellence.</p>
+            </div>
+            <div class="type-card secondary">
+                <div class="type-header">
+                    <span class="type-name">Space Grotesk — Body</span>
+                    <div class="type-weights">700 500 400 300</div>
+                </div>
+                <div class="type-sample">Clean. Human. Readable.</div>
+                <p class="type-body">Space Grotesk brings warmth and clarity to body text. Its geometric foundation with subtle humanist details ensures comfort at any size, from captions to extended reading.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <svg class="footer-mark" viewBox="0 0 100 100">
+            <path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="#ff6b4a" stroke-width="8"/>
+            <circle cx="50" cy="50" r="15" fill="#ff6b4a"/>
+            <text x="50" y="55" text-anchor="middle" fill="#0a0a0a" font-size="8" font-family="Archivo" font-weight="900">100</text>
+        </svg>
+        <p class="footer-text">Westwood Academy</p>
+        <p class="footer-sub">100 years of shaping the future</p>
+    </footer>
+
+    <div class="footer-year">1924 — 2024</div>
+
+    <script>
+        // Animated grid background
+        const gridBg = document.getElementById('gridBg');
+        for (let i = 0; i < 400; i++) {
+            const cell = document.createElement('span');
+            gridBg.appendChild(cell);
+        }
+
+        setInterval(() => {
+            const cells = gridBg.querySelectorAll('span');
+            const random = Math.floor(Math.random() * cells.length);
+            cells[random].classList.toggle('active');
+        }, 50);
+
+        // Parallax on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-year');
+            parallax.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
+
+        // Intersection observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.type-card, .mockup-card, .logo-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(40px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
